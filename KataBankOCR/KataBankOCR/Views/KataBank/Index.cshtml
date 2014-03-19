@@ -1,13 +1,13 @@
 ﻿@model dynamic
 
 @{
-    ViewBag.Title = "Kata Bank OCR - Jake Brewer"; 
+    ViewBag.Title = "Kata Bank OCR - Jake Brewer";
 }
 
-<h2>KataBankOCR</h2>
+<h2>Kata Bank OCR</h2>
 
-@using (Html.BeginForm("Index", "KataBank", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Index", "KataBank", FormMethod.Post, new {enctype = "multipart/form-data"}))
 {
-    <span><input type="file" name="file" class="form-control" style="display:inline" /></span>
+    <span><input type="file" name="file" class="form-control" style="display: inline" /></span>
     <span><input type="submit" value="Upload" /></span>
 }

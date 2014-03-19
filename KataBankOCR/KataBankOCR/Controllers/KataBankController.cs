@@ -1,8 +1,8 @@
 ﻿#region
 
-using System.Diagnostics;
 using System.Web;
 using System.Web.Mvc;
+using KataBankOCR.Business;
 
 #endregion
 
@@ -19,12 +19,14 @@ namespace KataBankOCR.Controllers
         public ActionResult Index(HttpPostedFileBase file)
         {
             ViewBag.File = file;
-            if (file != null && file.ContentLength > 0)
-            {                
-                Debug.WriteLine("This will send the file to our Kata");
-            }
 
-            return RedirectToAction("Index");
+            if (file == null || file.ContentLength <= 0) return RedirectToAction("Index");
+
+            var ocr = new KataBankOcr(file.InputStream);
+
+            ViewBag.Results = ocr.ProcessFileWithChecksum();
+
+            return View("Results");
         }
     }
 }

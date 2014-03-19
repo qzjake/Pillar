@@ -1,0 +1,19 @@
+﻿@model dynamic
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Accounts</title>
+    </head>
+    <body>
+        <h3>Results from: @ViewBag.File.FileName</h3>
+
+        <ul>
+            @foreach (var item in (string[]) ViewBag.Results)
+            {
+                <li>@item</li>
+            }        
+        </ul>
+    </body>
+</html>

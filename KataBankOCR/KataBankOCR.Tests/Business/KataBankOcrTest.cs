@@ -99,12 +99,13 @@ namespace KataBankOCR.Tests.Business
         public void CanReadNumber(int digit, char expectedResult)
         {
             var fileUtil = A.Dummy<IFileUtilities>();
+            var checksumCalculator = A.Dummy<IChecksumCalculator>();
             var rawCharacterReader = A.Fake<IRawCharacterReader>();
 
             A.CallTo(() => rawCharacterReader.GetRawDigit(A<string>.Ignored, A<int>.Ignored, A<int>.Ignored))
                 .Returns(RawDigits[digit]);
 
-            var sut = new KataBankOcr(fileUtil, rawCharacterReader);
+            var sut = new KataBankOcr(fileUtil, rawCharacterReader, checksumCalculator);
 
             var value = sut.GetValueAtPosition(0, 0);
 
@@ -118,6 +119,7 @@ namespace KataBankOCR.Tests.Business
         public void CanReadLine(int y, string expected)
         {
             var fileUtil = A.Dummy<IFileUtilities>();
+            var checksumCalculator = A.Dummy<IChecksumCalculator>();
             var rawCharacterReader = A.Fake<IRawCharacterReader>();
 
             var values = new List<string>();
@@ -133,7 +135,7 @@ namespace KataBankOCR.Tests.Business
             A.CallTo(() => rawCharacterReader.GetRawDigit(A<string>.Ignored, A<int>.Ignored, A<int>.Ignored))
                 .ReturnsNextFromSequence(valueArray);
 
-            var sut = new KataBankOcr(fileUtil, rawCharacterReader);
+            var sut = new KataBankOcr(fileUtil, rawCharacterReader, checksumCalculator);
 
             Assert.AreEqual(expected, sut.GetLine(y));
         }
@@ -143,6 +145,7 @@ namespace KataBankOCR.Tests.Business
         {
             var expected = new string[2] {"000000000", "111111111"};
             var fileUtil = A.Dummy<IFileUtilities>();
+            var checksumCalculator = A.Dummy<IChecksumCalculator>();
             var rawCharacterReader = A.Fake<IRawCharacterReader>();
 
             var values = new List<string>();
@@ -158,15 +161,40 @@ namespace KataBankOCR.Tests.Business
 
             A.CallTo(() => rawCharacterReader.GetRawDigit(A<string>.Ignored, A<int>.Ignored, A<int>.Ignored))
                 .ReturnsNextFromSequence(values.ToArray());
-            var sut = new KataBankOcr(fileUtil, rawCharacterReader);
+            var sut = new KataBankOcr(fileUtil, rawCharacterReader, checksumCalculator);
 
             Assert.AreEqual(expected, sut.ProcessFile());
-        }       
-
-        [Test]
-        public void CanDetectChecksum()
-        {
         }
 
+        [Test]
+        public void CanValidateChecksums()
+        {
+            var expected = new string[2] {"345882865", "664371495 ERR"};
+            var fileUtil = A.Dummy<IFileUtilities>();
+            var checksumCalculator = A.Fake<IChecksumCalculator>();
+            var rawCharacterReader = A.Fake<IRawCharacterReader>();
+
+            var digits = new[]
+            {
+                3, 4, 5, 8, 8, 2, 8, 6, 5,
+                6, 6, 4, 3, 7, 1, 4, 9, 5
+            };
+            var values = new List<string>();
+            for (var i = 0; i < digits.Length; i++)
+            {
+                values.Add(RawDigits[digits[i]]);
+            }
+            values.Add(null);
+
+            var checkResults = new[] {true, false};
+
+            A.CallTo(() => rawCharacterReader.GetRawDigit(A<string>.Ignored, A<int>.Ignored, A<int>.Ignored))
+                .ReturnsNextFromSequence(values.ToArray());
+
+            A.CallTo(() => checksumCalculator.DoesChecksumPass(A<string>.Ignored)).ReturnsNextFromSequence(checkResults);
+            var sut = new KataBankOcr(fileUtil, rawCharacterReader, checksumCalculator);
+
+            Assert.AreEqual(expected, sut.ProcessFileWithChecksum());
+        }
     }
 }

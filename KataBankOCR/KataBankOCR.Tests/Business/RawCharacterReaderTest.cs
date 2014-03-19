@@ -1,7 +1,9 @@
-﻿using System.IO;
-using FakeItEasy;
+﻿#region
+
 using KataBankOCR.Business;
 using NUnit.Framework;
+
+#endregion
 
 namespace KataBankOCR.Tests.Business
 {
@@ -25,8 +27,8 @@ namespace KataBankOCR.Tests.Business
                                  "67890abcdefghijklmnopqrstuv\n" +
                                  "7890abcdefghijklmnopqrstuvw\n" +
                                  "890abcdefghijklmnopqrstuvwx\n";
-            
-            
+
+
             var positionContents = sut.GetRawDigit(value, x, y);
             Assert.AreEqual(expected, positionContents);
         }

@@ -87,6 +87,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\ChecksumCalculatorTest.cs" />
     <Compile Include="Business\KataBankOcrTest.cs" />
     <Compile Include="Business\RawCharacterReaderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

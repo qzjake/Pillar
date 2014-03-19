@@ -1,4 +1,8 @@
-﻿using System;
+﻿#region
+
+using System;
+
+#endregion
 
 namespace KataBankOCR.Business
 {
@@ -15,15 +19,15 @@ namespace KataBankOCR.Business
         public string GetRawDigit(string input, int x, int y)
         {
             var contents = input;
-            var splitContents = contents.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+            var splitContents = contents.Split(new[] {'\n', '\r'}, StringSplitOptions.RemoveEmptyEntries);
 
-            if (4 * y + 2 > splitContents.Length)
+            if (4*y + 2 > splitContents.Length)
                 return null;
 
             return
-                splitContents[0 + 4 * y].Substring(x * 3, 3) +
-                splitContents[1 + 4 * y].Substring(x * 3, 3) +
-                splitContents[2 + 4 * y].Substring(x * 3, 3);
+                splitContents[0 + 4*y].Substring(x*3, 3) +
+                splitContents[1 + 4*y].Substring(x*3, 3) +
+                splitContents[2 + 4*y].Substring(x*3, 3);
         }
     }
 }

@@ -1,11 +1,13 @@
-﻿using System;
-using WebGrease;
-
-namespace KataBankOCR.Business
+﻿namespace KataBankOCR.Business
 {
-    public class ChecksumCalculator
+    public interface IChecksumCalculator
     {
-        public bool CalculateCheckSum(string input)
+        bool DoesChecksumPass(string input);
+    }
+
+    public class ChecksumCalculator : IChecksumCalculator
+    {
+        public bool DoesChecksumPass(string input)
         {
             int multiplier = 9;
             int returnValue = 0;
@@ -15,7 +17,7 @@ namespace KataBankOCR.Business
                 returnValue += value*multiplier;
                 multiplier--;
             }
-            return (returnValue % 11 == 0);
+            return (returnValue%11 == 0);
         }
     }
 }

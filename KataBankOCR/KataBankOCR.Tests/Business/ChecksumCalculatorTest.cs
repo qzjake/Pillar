@@ -13,7 +13,7 @@ namespace KataBankOCR.Tests.Business
         {
             var sut = new ChecksumCalculator();
             
-            Assert.AreEqual(expected, sut.CalculateCheckSum(input));
+            Assert.AreEqual(expected, sut.DoesChecksumPass(input));
         }
     }
 }
