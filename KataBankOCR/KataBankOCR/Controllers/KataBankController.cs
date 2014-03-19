@@ -20,7 +20,7 @@ namespace KataBankOCR.Controllers
         {
             ViewBag.File = file;
             if (file != null && file.ContentLength > 0)
-            {
+            {                
                 Debug.WriteLine("This will send the file to our Kata");
             }
 

@@ -109,13 +109,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Business\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Business\FileUtilities.cs" />
+    <Compile Include="Business\KataBankOcr.cs" />
+    <Compile Include="Business\RawCharacterReader.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KataBankController.cs" />
     <Compile Include="Global.asax.cs">

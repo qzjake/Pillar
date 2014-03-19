@@ -87,6 +87,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\KataBankOcrTest.cs" />
+    <Compile Include="Business\RawCharacterReaderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -96,13 +98,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="I:\proj\Pillar\Pillar\KataBankOCR\KataBankOCR\KataBankOCR.csproj">
-      <Project>{02CF8739-5760-4BE6-B332-4D66876A133F}</Project>
+    <ProjectReference Include="..\KataBankOCR\KataBankOCR.csproj">
+      <Project>{02cf8739-5760-4be6-b332-4d66876a133f}</Project>
       <Name>KataBankOCR</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Business\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
